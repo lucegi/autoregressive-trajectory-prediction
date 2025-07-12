@@ -3,7 +3,7 @@ This repository contains a script to train a model for predicting trajectories i
 
 ## Download the dataset
 Clone the repository:
-bash'''
+```
 git clone https://github.com/lucegi/autoregressive-trajectory-prediction.git
 cd autoregressive-trajectory-prediction
-'''
+```
