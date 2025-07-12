@@ -186,10 +186,9 @@ if __name__ == "__main__":
         print(f"  Track ID: {track_id}, Type: {obj_type}")
 
     # Output paths with timestamp
-    timestamp_str = str(timestamp_ns)
     output_dir = scenario_path.parent
-    image_output_path = "image_{timestamp_str}.png"
-    tensor_output_path = "tensor_{timestamp_str}.pt"
+    image_output_path = "image.png"
+    tensor_output_path = "tensor.pt"
 
     # Generate 4-channel tensor
     img_tensor = generate_scenario_tensor(scenario_path, map_path, timestamp_ns)
