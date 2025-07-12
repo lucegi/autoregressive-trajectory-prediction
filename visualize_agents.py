@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
 from matplotlib.patches import Rectangle
 import math
+import gzip
+import io
 import numpy as np
 from pathlib import Path
 import torch
@@ -83,7 +85,7 @@ def render_map_only(static_map, image_size, all_x, all_y):
     plt.close(fig)
     buf.seek(0)
     image = Image.open(buf).convert("L")  # Grayscale
-    return torch.from_numpy(np.array(image)).unsqueeze(0)  # (1, H, W)
+    return torch.from_numpy(np.array(image)).unsqueeze(0).to(torch.uint8)  # (1, H, W)
 
 def render_agents_only(scenario, timestamp_ns, timestep_idx, image_size, all_x, all_y):
     fig = plt.figure(figsize=(image_size / 100, image_size / 100), dpi=100)
@@ -150,7 +152,7 @@ def render_agents_only(scenario, timestamp_ns, timestep_idx, image_size, all_x, 
     plt.close(fig)
     buf.seek(0)
     image = Image.open(buf).convert("RGB")
-    return torch.from_numpy(np.array(image)).permute(2, 0, 1)  # (3, H, W)
+    return torch.from_numpy(np.array(image)).permute(2, 0, 1).to(torch.uint8)  # (3, H, W)
 
 def generate_scenario_tensor(
     scenario_path: Path,
@@ -194,9 +196,14 @@ if __name__ == "__main__":
     img_tensor = generate_scenario_tensor(scenario_path, map_path, timestamp_ns)
 
     # Save 4-channel tensor
-    torch.save(img_tensor, tensor_output_path)
-    print(f"Saved tensor: {tensor_output_path}, shape: {img_tensor.shape}")
+    buffer = io.BytesIO()
+    torch.save(img_tensor, buffer)
+    buffer.seek(0)  # rewind
+
+    with gzip.open("scene.pt.gz", "wb") as f_out:
+        f_out.write(buffer.read())
+    print(f"Saved compressed tensor")
 
     # Save RGB visualization of 4-channel tensor
     save_4channel_image(img_tensor, image_output_path)
-    print(f"Saved image: {image_output_path}")
+    print(f"Saved image")
