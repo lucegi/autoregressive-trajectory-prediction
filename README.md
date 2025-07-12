@@ -7,3 +7,7 @@ Clone the repository:
 git clone https://github.com/lucegi/autoregressive-trajectory-prediction.git
 cd autoregressive-trajectory-prediction
 ```
+Install ```s5cmd``` binary locally in ```~/.local/bin``` and download the dataset:
+```bash
+bash download_dataset.sh
+```
