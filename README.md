@@ -11,3 +11,10 @@ Install ```s5cmd``` binary locally in ```~/.local/bin``` and download the datase
 ```bash
 bash download_dataset.sh
 ```
+
+## Rasterize one scenario
+The dataset is converted in a multi-channel image, where the map information is encoded in one channel, while the other three channels contain information about traffic participants.
+To generate a multi-channel tensor of a scenario and plot it, run:
+```bash
+python3 visualize_agents.py
+```
