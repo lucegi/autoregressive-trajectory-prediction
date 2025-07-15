@@ -16,7 +16,7 @@ bash download_dataset.sh
 The dataset is converted in a multi-channel image, where the map information is encoded in one channel, while the other three channels contain information about traffic participants.
 To generate a multi-channel tensor of a scenario and plot it, run:
 ```bash
-python3 visualize_agents.py
+python3 raster_scenario.py
 ```
 This will create the compressed tensor ```scene.pt.gz``` and an image for visualization purposes ```ìmage.png```:
 ![Alt text](media/image.png)
