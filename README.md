@@ -19,4 +19,4 @@ To generate a multi-channel tensor of a scenario and plot it, run:
 python3 raster_scenario.py
 ```
 This will create the compressed tensor ```scene.pt.gz``` and an image for visualization purposes ```ìmage.png```:
-![Alt text](media/image.png)
+![Alt text](media/image_30.png)
