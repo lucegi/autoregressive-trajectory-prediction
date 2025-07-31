@@ -8,7 +8,7 @@ from tqdm import tqdm
 from av2.datasets.motion_forecasting import scenario_serialization
 from raster_scenario import (
     generate_scenario_tensor,
-    save_4channel_image,
+    save_rgb_tensor_image,
     extract_trajectories_to_json,
     list_agents_at_timestamp,
 )
@@ -38,25 +38,21 @@ def process_scenario(scenario_dir: Path, output_dir: Path, step=10, interval=5):
 
         tensor = generate_scenario_tensor(scenario_path, map_path, timestep_indices)
 
-        tensor_output_path = output_dir / f"scene_{idx}.pt.gz"
-        with gzip.open(tensor_output_path, "wb") as f_out:
-            buffer = io.BytesIO()
-            torch.save(tensor, buffer)
-            buffer.seek(0)
-            f_out.write(buffer.read())
-
         image_output_path = output_dir / f"image_{idx}.png"
-        save_4channel_image(tensor, image_output_path)
+        save_rgb_tensor_image(tensor, image_output_path)
 
     # Save trajectories for the full scenario once
     extract_trajectories_to_json(scenario, output_dir / "trajectories.json")
 
-def process_dataset(root_dir: Path, output_root: Path):
-    for split in ["train", "validation", "test"]:
+def process_dataset(root_dir: Path, output_root: Path, limits: dict = None):
+    for split in ["train", "val", "test"]:
         split_dir = root_dir / split
         out_split_dir = output_root / split
         scenario_dirs = [d for d in split_dir.iterdir() if d.is_dir()]
         
+        if limits and split in limits:
+            scenario_dirs = scenario_dirs[:limits[split]]
+
         for scenario_dir in tqdm(scenario_dirs, desc=f"Processing {split}"):
             out_scenario_dir = out_split_dir / scenario_dir.name
             process_scenario(scenario_dir, out_scenario_dir)
@@ -65,4 +61,4 @@ if __name__ == "__main__":
     input_dataset = Path("dataset")  # Replace with actual path
     output_dataset = Path("converted_dataset")  # Replace as needed
 
-    process_dataset(input_dataset, output_dataset)
+    process_dataset(input_dataset, output_dataset, limits={"train": 1000, "val": 100, "test": 50})
