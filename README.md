@@ -35,6 +35,7 @@ To generate an example of a scenario and plot it, run:
 python3 raster_scenario.py
 ```
 This will create the folder ```\image_generation_test```  that contains a sequence of frames and a json file with the trajectories in the scenario. A frame looks like this:
+
 ![Alt text](media/image_0.png)
 
 ## Convert the Dataset
