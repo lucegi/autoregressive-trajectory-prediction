@@ -47,10 +47,9 @@ This will create a dataset structure of the following way:
 /converted_dataset/
 ├── train/
 │   ├── <scenario_id_1>/
-│   │   ├── scene_0.pt.gz
 │   │   ├── image_0.png
-│   │   ├── scene_10.pt.gz
 │   │   ├── image_10.png
+│   │   ├── image_20.png
 │   │   ├── ...
 │   │   └── trajectories.json
 │   ├── <scenario_id_2>/
