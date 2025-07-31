@@ -58,7 +58,8 @@ def process_dataset(root_dir: Path, output_root: Path, limits: dict = None):
             process_scenario(scenario_dir, out_scenario_dir)
 
 if __name__ == "__main__":
-    input_dataset = Path("dataset")  # Replace with actual path
-    output_dataset = Path("converted_dataset")  # Replace as needed
+    root_dir = Path("dataset")  # Replace with actual path
+    output_dir = Path("converted_dataset")  # Replace as needed
+    limits={"train": 1000, "val": 100, "test": 50}
 
-    process_dataset(input_dataset, output_dataset, limits={"train": 1000, "val": 100, "test": 50})
+    process_dataset(root_dir, output_dir)
