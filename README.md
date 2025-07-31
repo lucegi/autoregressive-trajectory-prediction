@@ -29,13 +29,13 @@ The dataset will have the following structure:
 ``` 
 
 ## Rasterize one scenario
-The dataset is converted in a 4-channel image, where the map information is encoded in one channel, while the other three channels encode three timesteps of the traffic participants.
-To generate a multi-channel tensor of a scenario and plot it, run:
+The dataset is converted in images, where the three channels encode three timesteps of the traffic participants, the map is encoded as background in these three channel as well, but with a very low value (dark gray).
+To generate an example of a scenario and plot it, run:
 ```bash
 python3 raster_scenario.py
 ```
-This will create the compressed tensor ```scene.pt.gz``` and an image for visualization purposes ```ìmage.png```:
-![Alt text](media/image_30.png)
+This will create the folder ```\image_generation_test```  that contains a sequence of frames and a json file with the trajectories in the scenario. A frame looks like this:
+![Alt text](media/image_0.png)
 
 ## Convert the Dataset
 To convert the full dataset, run:
