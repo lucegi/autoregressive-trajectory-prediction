@@ -62,3 +62,10 @@ This will create a dataset structure of the following way:
 │   ├── <scenario_id_4>/
 │   │   └── ...
 ``` 
+
+## Train
+To train the model to be able to predict autoregressively the next three frames run:
+
+```bash
+python3 train.py
+```
